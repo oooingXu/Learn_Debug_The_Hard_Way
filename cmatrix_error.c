@@ -25,7 +25,7 @@ http://codegolf.stackexchange.com/questions/17285/make-the-matrix-digital-rain-u
 #define W 80
 #define H 24
 
-#define NUM 1
+#define NUM 100
 
 static uint64_t get_time_internal() {
   struct timespec now;
@@ -119,8 +119,6 @@ int main() {
     screen_refresh();
     usleep(100000);
   }
-
-  //free(t);
 
 	return 0;
 }

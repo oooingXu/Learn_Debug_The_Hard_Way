@@ -13,6 +13,7 @@ http://codegolf.stackexchange.com/questions/17285/make-the-matrix-digital-rain-u
 #include <stdio.h>
 #include <stdint.h>
 #include <time.h>
+#include <assert.h>
 
 #define ANSI_COLOR_RED   31
 #define ANSI_COLOR_GREEN 32
@@ -84,6 +85,7 @@ static void sub_d(int p, int s, int x, int y) {
 int main() {
   int i, x, y, k, num;
   int* t = (int *)malloc(W * sizeof(int));
+	assert(t != NULL);
 
   screen_clear();
 
