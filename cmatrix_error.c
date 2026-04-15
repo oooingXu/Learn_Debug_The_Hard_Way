@@ -15,7 +15,7 @@ http://codegolf.stackexchange.com/questions/17285/make-the-matrix-digital-rain-u
 #include <time.h>
 #include <assert.h>
 
-#define DEBUG
+//#define DEBUG
 
 #define ANSI_COLOR_RED   31
 #define ANSI_COLOR_GREEN 32
@@ -119,6 +119,8 @@ int main() {
     screen_refresh();
     usleep(100000);
   }
+
+	//free(t);
 
 	return 0;
 }
