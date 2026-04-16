@@ -20,23 +20,32 @@ http://codegolf.stackexchange.com/questions/17285/make-the-matrix-digital-rain-u
 #define ANSI_COLOR_WHITE 37
 #define ANSI_COLOR_RESET 0
 
-#define W 80
-#define H 24
+#define SCREEN_WIDTH  80
+#define SCREEN_HEIGHT 24
 
 #define NUM 100
 
-static uint64_t get_time_internal() {
-  struct timespec now;
-  clock_gettime(CLOCK_MONOTONIC_COARSE, &now);
-  uint64_t us = now.tv_sec * 1000000 + now.tv_nsec / 1000;
-  return us;
+#ifdef _WIN32
+#include <windows.h>
+static inline void usleep(int us) {
+    Sleep(us / 1000 > 0 ? us / 1000 : 1);
 }
 
+#else
+
+static uint64_t get_time_internal() {
+   struct timespec now;
+   clock_gettime(CLOCK_MONOTONIC_COARSE, &now);
+   uint64_t us = now.tv_sec * 1000000 + now.tv_nsec / 1000;
+   return us;
+ }
+
 static inline void usleep(int us) {
-  uint64_t now = get_time_internal();
-  uint64_t next = now + us;
-  while ( get_time_internal()< next) ;
-}
+   uint64_t now = get_time_internal();
+   uint64_t next = now + us;
+   while ( get_time_internal()< next) ;
+ }
+#endif
 
 static inline void set_color(int c) {
   printf("\033[%dm", c);
@@ -76,7 +85,7 @@ static void sub_d(int p, int s, int x, int y) {
     }
   }
 
-  if ((y >= 0) && (y < H) && (x < W)) {
+  if ((y >= 0) && (y < SCREEN_HEIGHT) && (x < SCREEN_WIDTH)) {
     char c = (r < 10 ? ' ' : 33 + (x * y) % 94);
     print_char(c, y, x);
   }
@@ -84,21 +93,21 @@ static void sub_d(int p, int s, int x, int y) {
 
 int main() {
   int i, x, y, k, num;
-  int* t = (int *)malloc(W * sizeof(int));
+  int* t = (int *)malloc(SCREEN_WIDTH * sizeof(int));
 	assert(t != NULL);
 
   screen_clear();
 
   x = rand();
-  for (i = 0; i < W; i++) {
+  for (i = 0; i < SCREEN_WIDTH; i++) {
     t[i] = - rand() % 50;
   }
 
   sub_d(1,1,10,10);
 
   for(num = 0; num < NUM; num++){
-    for (k = 1; k < W; k++) {
-      i = rand() % (W - 1);
+    for (k = 1; k < SCREEN_WIDTH; k++) {
+      i = rand() % (SCREEN_WIDTH - 1);
       if (t[i] > 28)t[i] = 0;
       t[i] = t[i] + 1;
       y = t[i];

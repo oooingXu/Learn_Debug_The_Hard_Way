@@ -22,6 +22,12 @@ cmatrix_error_asan:
 valgrind_cmatrix_error:
 	valgrind $(CMATRIX_ERROR)
 
+run_cmatrix:
+	$(CMATRIX)
+
+run_cmatrix_error:
+	$(CMATRIX_ERROR)
+
 gdb_cmatrix_error:
 	gdb $(CMATRIX_ERROR)
 	
@@ -31,4 +37,4 @@ gdb_cmatrix_error_tui:
 clean:
 	rm -rf $(LDTHW_HOME)/a.out $(BUILD)
 
-.PHONY: all clean cmatrix cmatrix_error cmatrix_error_gdb cmatrix_error_asan valgrind_cmatrix_error gdb_cmatrix_error gdb_cmatrix_error_tui
+.PHONY: all clean cmatrix cmatrix_error cmatrix_error_gdb cmatrix_error_asan valgrind_cmatrix_error gdb_cmatrix_error gdb_cmatrix_error_tui run_cmatrix run_cmatrix_error
